@@ -3,18 +3,21 @@ import { useState } from 'react';
 
 export default function Home() {
   const [coins, setCoins] = useState(2500);
-  const [currentScreen, setCurrentScreen] = useState('home');
+  const [currentScreen, setCurrentScreen] = useState('home'); // 'home' أو 'room'
   const [roomName, setRoomName] = useState('');
   
+  // سجل التفاعل والتكست الحي
   const [chatLog, setChatLog] = useState<string[]>([
     '👑 أهلاً بك في قصر الأمير الملكي!',
     '💬 صالة الدردشة وغرف الصوت الحية وصناديق الحظ نشطة.'
   ]);
 
+  // نافذة الهدايا ومضاعفاتها (X)
   const [showGiftModal, setShowGiftModal] = useState(false);
   const [multiplier, setMultiplier] = useState(1);
   const [showMultiplierMenu, setShowMultiplierMenu] = useState(false);
 
+  // قائمة الهدايا الملكية
   const giftsList = [
     { name: 'هدية الاحتفال 🎉', cost: 10 },
     { name: 'العنكبوت 🕷️', cost: 10 },
@@ -24,10 +27,11 @@ export default function Home() {
     { name: 'تاج الذهب الملكي 👑', cost: 500 },
   ];
 
+  // دالة إرسال الهدية مع المضاعف وصندوق الحظ
   const sendGiftWithMultiplier = (giftName: string, baseCost: number) => {
     const totalCost = baseCost * multiplier;
     if (coins < totalCost) {
-      alert('عفواً يا ملك، رصيد الكوينز لا يكفي لإرسال هذه الهدية بالمضاعف الحالي!');
+      alert('عفواً يا ملك، رصيد الذهب لا يكفي لإرسال هذه الهدية بالمضاعف الحالي!');
       return;
     }
     setCoins(coins - totalCost);
@@ -46,6 +50,7 @@ export default function Home() {
     return (
       <main className="min-h-screen bg-slate-950 text-white p-6 flex flex-col items-center font-sans">
         <div className="w-full max-w-md space-y-6">
+          {/* هيدر الملك والذهب */}
           <div className="bg-slate-900 border border-amber-500/30 rounded-2xl p-5 flex items-center justify-between shadow-lg">
             <div>
               <h2 className="text-lg font-bold text-amber-400">الملك محمد عماد</h2>
@@ -62,6 +67,7 @@ export default function Home() {
             </button>
           </div>
 
+          {/* قسم الغرف النشطة */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
             <h3 className="text-md font-bold text-white mb-3 flex items-center gap-2">
               🎙️ غرف الصوت الملكية وصناديق الحظ
@@ -87,9 +93,12 @@ export default function Home() {
     );
   }
 
+  // واجهة الغرفة الصوتية الكاملة
   return (
     <main className="min-h-screen bg-slate-950 text-white p-4 flex flex-col items-center font-sans relative">
       <div className="w-full max-w-md bg-slate-900 border border-amber-500/30 rounded-2xl p-4 shadow-2xl flex flex-col h-[90vh]">
+        
+        {/* هيدر الروم وصندوق الحظ العلوي */}
         <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
           <div>
             <h2 className="font-bold text-amber-400 text-sm">{roomName}</h2>
@@ -107,6 +116,7 @@ export default function Home() {
           </button>
         </div>
 
+        {/* شبكة الـ 15 مايك */}
         <div className="grid grid-cols-5 gap-1.5 mb-3">
           {Array.from({ length: 15 }, (_, i) => i + 1).map((micNum) => (
             <div key={micNum} className="bg-slate-950 border border-slate-800 p-2 rounded-xl flex flex-col items-center justify-center text-center aspect-square">
@@ -118,6 +128,7 @@ export default function Home() {
           ))}
         </div>
 
+        {/* سجل التفاعل الحي (التكست السفلي) */}
         <div className="bg-slate-950 border border-slate-800 rounded-xl p-2.5 flex-1 overflow-y-auto mb-3 text-xs space-y-1">
           <div className="text-[10px] font-bold text-amber-400 mb-1 border-b border-slate-800 pb-0.5">📜 سجل التفاعل:</div>
           {chatLog.map((log, index) => (
@@ -127,6 +138,7 @@ export default function Home() {
           ))}
         </div>
 
+        {/* شريط الأزرار السفلي */}
         <div className="pt-2 border-t border-slate-800 flex items-center gap-2">
           <button 
             onClick={() => alert('تم فتح الميكروفون بنجاح يا ملك!')}
@@ -151,6 +163,7 @@ export default function Home() {
         </div>
       </div>
 
+      {/* نافذة خزانة الهدايا والمضاعفات الاحترافية */}
       {showGiftModal && (
         <div className="absolute inset-0 bg-black/85 backdrop-blur-sm flex items-end justify-center z-50">
           <div className="w-full max-w-md bg-slate-900 border-t border-amber-500/50 rounded-t-3xl p-5 shadow-2xl">
